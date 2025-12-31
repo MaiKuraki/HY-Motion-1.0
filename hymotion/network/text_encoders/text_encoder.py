@@ -99,7 +99,9 @@ class HYTextModel(nn.Module):
                 padding_side="right",
             )
             self.llm_text_encoder = LLM_ENCODER_LAYOUT[llm_type]["text_encoder_class"].from_pretrained(
-                LLM_ENCODER_LAYOUT[llm_type]["module_path"], low_cpu_mem_usage=True
+                LLM_ENCODER_LAYOUT[llm_type]["module_path"],
+                low_cpu_mem_usage=True,
+                torch_dtype=torch.bfloat16,
             )
             self.llm_text_encoder = self.llm_text_encoder.eval().requires_grad_(False)
             self.ctxt_dim = self.llm_text_encoder.config.hidden_size
